@@ -28,9 +28,11 @@ url reference/requests:
 route1: 
 get
 localhost:3000/api/users
+(get all users)
 
 post
 localhost:3000/api/users
+(add/post a new user)
     {
         "name": "Ronald4",
         "username": "RonRonRon4",
@@ -40,9 +42,11 @@ localhost:3000/api/users
 route2: 	
 get
 localhost:3000/api/users/4
+(get user 4)
 
 patch
 localhost:3000/api/users/4
+(edit the user 4)
     {
         "name": "Ronald444",
         "username": "RonRonRon444",
@@ -51,19 +55,22 @@ localhost:3000/api/users/4
 
 delete
 localhost:3000/api/users/4
+(delete the 4 user)
 
 route3: 
 get
 localhost:3000/api/users/1/posts
+(get all posts for user 1)
 
 route4:
 get
 localhost:3000/api/userTEST ERROR
+(get to trigger a error handler)
 
 route5:
 get
 localhost:3000/api/users/customMiddleWare
-
+(get to trigger the customMiddleWare)
 
 /// posts data //////////////////////////
 similar url request for posts (except customMiddleWare)
