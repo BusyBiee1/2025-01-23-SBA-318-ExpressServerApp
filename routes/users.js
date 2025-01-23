@@ -81,21 +81,11 @@ router
   //localhost:3000/api/users/1/posts/?api-key=perscholas
   .route("/:id/posts")
   .get((req, res, next) => {
-    //console.log("/:id/posts");
     const postsData = postsDataFile.filter((p) => p.id == req.params.id);
-    //const { userId } = req.query; // Extract userId from query parameters
     //console.log(postsDataFile);
-    console.log(req.query);
-    console.log(req.params);
+    //console.log(req.query);
+    //console.log(req.params);
     // Check if userId is provided
-    //if (!userId) {
-    //  return res.status(400).json({ error: "UserId query parameter is required" });
-   // }
-    //console.log (userPosts); 
-    // Filter posts by userId
-    //const userPosts = posts.filter((p) => p.id === req.params.id);
-    //console.log (userPosts);
-    // Return filtered posts or a not-found message
     if (postsData.length > 0) {
         //console.log(postData);
         res.json(postsData);
@@ -106,6 +96,7 @@ router
     }
   })
 
+  
 // Utilizing custom middleware and URL route parameter 
 // example call will be http://localhost:3000//user/custommiddleware )
 // the customMiddleware is the custom middle ware funciton to give is special middle action.

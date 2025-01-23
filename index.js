@@ -20,7 +20,6 @@ app.use(bodyParser.json({ extended: true }));
 // Logging Middlewaare
 app.use((req, res, next) => {
   const time = new Date();
-
   console.log(
     `-----
 ${time.toLocaleTimeString()}: Received a ${req.method} request to ${req.url}.`
@@ -32,6 +31,7 @@ ${time.toLocaleTimeString()}: Received a ${req.method} request to ${req.url}.`
   next();
 });
 
+// future code ////
 // Valid API Keys.
 // apiKeys = ["perscholas", "ps-example", "hJAsknw-L198sAJD-l3kasx"];
 // URL call will be http://localhost:3000/api/users?api-key=perscholas
@@ -72,60 +72,8 @@ app.use("/api/users/customMiddleWare", customMiddleWare);
 app.use("/api/posts", postsRoute);
 app.use("/api/comments", commentsRoute);
 
-//app.use("/users", users);
-//app.use("/posts", posts);
 
-// UNCOMMENTED THESE LINES BELOW
-//
-//// Adding some HATEOAS links.
-//app.get("/", (req, res) => {
-//  res.json({
-//    links: [
-//      {
-//        href: "/api",
-//        rel: "api",
-//        type: "GET",
-//      },
-//    ],
-//  });
-//});
-
-//// Adding some HATEOAS links.
-//app.get("/api", (req, res) => {
-//  res.json({
-//    links: [
-//      {
-//        href: "api/users",
-//        rel: "users",
-//        type: "GET",
-//      },
-//      {
-//        href: "api/users",
-//        rel: "users",
-//        type: "POST",
-//      },
-//      {
-//        href: "api/posts",
-//        rel: "posts",
-//        type: "GET",
-//      },
-//      {
-//       href: "api/posts",
-//       rel: "posts",
-//        type: "POST",
-//      },
-//    ],
-//  });
-//}); 
-//
-// UNCOMMENTED THESE LINES ABOVE
-
-// timeing middleware
-// can add code here for that. login request.
-
-//validataion middlewarse before it goes to routes.
-
-
+// future code 
 // Error-handling middleware.
 // Any call to next() that includes an
 // Error() will skip regular middleware and
@@ -144,7 +92,7 @@ app.use("/api/comments", commentsRoute);
 //    //next(error(401, "Resource Not Found"));
 //    });
 
-
+  // Error-handling middleware.
   // 404 Middleware for unmatched routes
   app.use((req, res, next) => {
     next(error(404, 'Resource Not Found'));
