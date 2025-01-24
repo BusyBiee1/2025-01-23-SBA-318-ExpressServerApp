@@ -2,30 +2,43 @@ const express = require("express");
 const router = express.Router();
 
 const usersDataFile = require("../data/users");
-const customMiddleWare = require ("../routes/customMiddleWare");
+const customMiddleWare1 = require ("../routes/customMiddleWare");
 const Utilserror = require("../utilities/error");
 const postsDataFile = require("../data/posts");
 
 //////////////////////////////////////////////////
 ////////////////////// ROUTES ///////////////////
 
-///////////// custom middlware .route("/customMiddleWare" ///////////////
-router
-  .route("/customMiddleWare") 
-  .get(customMiddleWare, (req, res) => {
-    console.log(`This is a custom middleware is running ONLY for /user/custommiddleware.  -get- -/customMiddleWare-`);
-    // for errors send() and json() actually send the response to the client, 
-    // use either send() OR json(), not both
-    // always set the status first, then send the response.
-    return res.status(200).json({ MESSAGE: `This is a custom middleware is running ONLY for /user/custommiddleware.  -get- -/customMiddleWare-`});
-  })
 
-//////////////////// .route("/") and query .route("/?name") ///////////////
+////////////////////// .route("/?name") ///////////////
+//
+//  router
+//  .route("/?name")
+//  .get((req, res) => {
+//    console.log(`req.query is ${req.query}`);
+//    const name = req.query; // Extract the 'name' query parameter
+//    if (!name) {
+//      return Utilserror(409, "name query value is required, --post- -/?name-");
+//    }
+//
+//    // Filter users based on the name query parameter
+//    const filteredUsers = usersDataFile.filter((user) =>
+//      user.name.toLowerCase().includes(name.toLowerCase())
+//    );
+//
+//    if (filteredUsers.length === 0) {
+//      return res.status(404).json({ error: `No users found with name "${name}"` });
+//    }
+//   
+//    res.json(filteredUsers);
+//  });
+
+
+//////////////////// .route("/") with query .route("/?name") ///////////////
 router
   // localhost:3000/api/users/?api-key=perscholas
   // localhost:3000/api/users
   // localhost:3000/api/users/?name=Mikoto
-  // localhost:3000/api/users/customMiddleWare
   .route("/") 
   .get((req, res) => {
     const { name } = req.query; // Extract the 'name' query parameter
@@ -35,15 +48,15 @@ router
       return res.json(usersDataFile);
     }
 
-    // Filter users by query name
+    // Filter users by name
     const userData = usersDataFile.filter((user) => user.name === name);
+
     if (userData.length > 0) {
       // If matching users are found, return them
       return res.json(userData);
-    }
-    else {
-      next(Utilserror(404, `No resourece found for Name: ${name}. -get- -/?name-`));
-      //return res.status(404).json({ error: `No users found with name "${name}"` });
+    } else {
+      // If no users match, return a 404 error
+      return res.status(404).json({ error: `No users found with name "${name}"` });
     }
     next();
   })
@@ -78,6 +91,28 @@ router
       //res.status(404).json({ ERROR: "Insufficient Data. -post- -/-1" });
     }
   })
+  
+  //////////////////// .route("/customMiddleWare") ///////////////
+
+// Utilizing custom middleware and URL route parameter 
+// example call will be http://localhost:3000//user/custommiddleware )
+// the customMiddleware is the custom middle ware funciton to give is special middle action.
+router
+//localhost:3000/api/customMiddleWare
+.route("/customMiddleWare")
+//app.get('/user/:id', customMiddleware, (req, res) => {
+.get(customMiddleWare1, (req, res) => {
+  console.log(`This is a custom middleware is running ONLY for /user/custommiddleware.  -get- -/customMiddleWare-`);
+  // for errors send() and json() actually send the response to the client, 
+  // use either send() OR json(), not both
+  // always set the status first, then send the response.
+  res.status(200).json({ MESSAGE: `This is a custom middleware is running ONLY for /user/custommiddleware.  -get- -/customMiddleWare-`});
+  //res.json({error: "insufficiant data"});
+  //res.status(210).json(`No posts found for userId: ${req.params.id}. -get- -/:id/posts-`);
+  //res.status(404).send('Resource not found'
+  //res.send('This is a custom middleware is running ONLY for /user/custommiddleware.');
+});
+
 
   //////////////////// .route("/:id") ///////////////
   router
@@ -88,8 +123,7 @@ router
     if (userData) 
        res.json(userData);
     else 
-       next(Utilserror(404, `No Resource found for userId: ${req.params.id}. -get- -/:id-`));  
-  })
+       next(Utilserror(404, `No userid found for userId: ${req.params.id}. -get- -/:id-`));  })
   .patch((req, res, next) => {
     const userData = usersDataFile.find((u, i) => {
       if (u.id == req.params.id) {
@@ -102,7 +136,7 @@ router
     if (userData) 
         res.json(userData);
     else 
-        next(Utilserror(404, `No Resource found for userId: ${req.params.id}. -patch- -/:id-`));
+        next(Utilserror(404, `No userid found for userId: ${req.params.id}. -patch- -/:id-`));
   })
   .delete((req, res, next) => {
     const userData = usersDataFile.find((u, i) => {
@@ -115,7 +149,7 @@ router
     if (userData) 
         res.json(userData);
     else 
-        next(Utilserror(404, `No Resourece found for userId: ${req.params.id}. -post- -/:id-`));
+        next(Utilserror(404, `No userid found for userId: ${req.params.id}. -post- -/:id-`));
   });
 
 
@@ -142,5 +176,8 @@ router
         //next();
     }
   })
+
+
+
 
 module.exports = router;
