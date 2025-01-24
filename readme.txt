@@ -8,16 +8,18 @@ This express application had the following feature:
     one error custom middleware (in module)
     (eg:localhost:3000/api/users/customMiddleWare)
 
-    one time stamp middleware
+    server one time stamp middleware
+    (console logs the time and date)
 
 2. Data dir:
    has:
-     three data files namely, users, posts, comments
+     three data files 
+     (users, posts, comments)
 
 Functionality:
-For users data one can perform    -get, patch, delete, post 
-For posts data one can perform    -get, patch, delete, post
-For comments data one can perform -get, patch, delete, post
+For users data     -get, patch, delete, post 
+For posts data     -get
+For comments data  -get
 
 
 /////////////////////////////////////////////////////////////
@@ -25,10 +27,14 @@ For comments data one can perform -get, patch, delete, post
 url reference/requests:
 
 /// users data //////////////////////////
-route1: 
+route1 
 get
 localhost:3000/api/users
 (get all users)
+
+get
+localhost:3000/api/users/?name=Mikoto
+(get user by a query name)
 
 post
 localhost:3000/api/users
@@ -60,7 +66,7 @@ localhost:3000/api/users/4
 route3: 
 get
 localhost:3000/api/users/1/posts
-(get all posts for user 1)
+(get all posts for userid 1 or any user id)
 
 route4:
 get
@@ -72,12 +78,19 @@ get
 localhost:3000/api/users/customMiddleWare
 (get to trigger the customMiddleWare)
 
+
 /// posts data //////////////////////////
-similar url request for posts (except customMiddleWare)
+route1 /api/posts: 
+get
+localhost:3000/api/posts
+(get all posts)
 
 
 /// comments data //////////////////////////
-similar url request for comments (except customMiddleWare)
+route1 /api/comments: 
+get
+localhost:3000/api/comments
+(get all comments)
 
 
 
